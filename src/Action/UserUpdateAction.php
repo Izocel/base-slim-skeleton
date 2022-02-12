@@ -4,6 +4,7 @@ namespace App\Action;
 
 use App\Domain\User\Service\UserReader;
 use App\Domain\User\Service\UserUpdater;
+use App\Factory\LoggerFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Psr7\Response;
@@ -12,13 +13,17 @@ final class UserUpdateAction
 {
     private $userUpdater;
     private $userReader;
+    private $logger;
 
     public function __construct(
-        UserUpdater $userUpdater,
-        UserReader $userReader)
+        UserUpdater $userUpdater, UserReader $userReader,
+        LoggerFactory $loggerFactory)
     {
         $this->userUpdater = $userUpdater;
         $this->userReader = $userReader;
+        $this-> logger = $loggerFactory
+        ->addFileHandler('userLog.log')
+        ->createLogger('updateUser');
     }
 
     public function __invoke(
@@ -61,8 +66,10 @@ final class UserUpdateAction
         $notFoundErrors = $data['notFound-errors'] ? true : false;
         $validationErrors = $data['validation-errors'] ? true : false;
 
+        $jsonData = json_encode($data);
+
         // Envoit les résultats dans le body de la réponse
-        $response->getBody()->write((string)json_encode($data));
+        $response->getBody()->write((string)$jsonData);
 
 
         if($validationErrors){
@@ -81,9 +88,11 @@ final class UserUpdateAction
             ->withStatus(404);
         }
 
-
         // Logging here: User Updated successfully
-        //$this->logger->info(sprintf('User Updated successfully: %s', $resultat));
+        $this->logger->info(
+            sprintf("L'usager %s a été modifié: %s",
+            $data['username'], $jsonData)
+        );
         return $response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(200);
