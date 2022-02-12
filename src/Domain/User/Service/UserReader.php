@@ -50,6 +50,24 @@ final class UserReader
 
 
     /**
+     * Lecture d'usageers avec body en entré
+     *
+     * @param onbject $requestBody Le body de le requete
+     *
+     * @return array Les données sortantes de l'usager
+     */
+    public function selectUsers(object $requestBody): array
+    {
+        // Selection de l'usager
+        $resultat = $this->repository->selectUsers($requestBody);
+
+        // Validation des sorties
+        $resultat = $this->validateUsersSelection($resultat);
+        return $resultat;
+    }
+
+
+    /**
      * Validation d'entrées.
      *
      * @param array $data L'array de données
@@ -65,6 +83,30 @@ final class UserReader
         if (empty($data) ) {
            $rqstErrors['errorDescription'] = "Échec de la selection de l'usager";
            $rqstErrors['user/{id}'] = 'Aucun usager associé à cet identifiant';
+           $errors['notFound-errors'] =  $rqstErrors;
+        }
+        // throw new ValidationException('Please check your input', $errors);
+        
+        return $rqstErrors ? $errors : $data;
+   }
+
+
+   /**
+     * Validation d'entrées.
+     *
+     * @param array $data L'array de données
+     *
+     * @return array
+     */
+    private function validateUsersSelection(array $data): array
+    {
+        
+        $errors = [];
+        $rqstErrors = null;
+
+        if (empty($data) ) {
+           $rqstErrors['errorDescription'] = "Échec de la selection d'usagers";
+           $rqstErrors['body'] = 'Aucun usager trouvé selon ces critères';
            $errors['notFound-errors'] =  $rqstErrors;
         }
         // throw new ValidationException('Please check your input', $errors);

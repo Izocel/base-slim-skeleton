@@ -91,7 +91,7 @@ final class UserUpdateAction
         // Logging here: User Updated successfully
         $this->logger->info(
             sprintf("L'usager %s a été modifié: %s",
-            $data['username'], $jsonData)
+                $data['username'], $jsonData)
         );
         return $response
             ->withHeader('Content-Type', 'application/json')
