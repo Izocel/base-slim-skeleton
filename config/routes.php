@@ -6,6 +6,9 @@ use Slim\App;
 
 return function (App $app) {
 
+    //Test
+    $app->get('/test',  \App\Action\HomeAction::class)->setName('Tests');
+
     // Documentation de l'api
     $app->get('/docs', \App\Action\Docs\SwaggerUiAction::class);
     $app->get('/', \App\Action\Docs\SwaggerUiAction::class)->setName('Docs');
