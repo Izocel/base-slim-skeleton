@@ -11,13 +11,42 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{localUrl}}/user/10000",
+					"raw": "{{localUrl}}/user/2",
 					"host": [
 						"{{localUrl}}"
 					],
 					"path": [
 						"user",
-						"10000"
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"match\": {\r\n        \"id\": 12,\r\n        \"username\": \"jhoverta\"\r\n    },\r\n    \"fields\": [\"id\", \"username\"],\r\n    \"order\": {\r\n        \"username\": 1,\r\n        \"email\": -1\r\n    },\r\n    \"limit\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localUrl}}/users",
+					"host": [
+						"{{localUrl}}"
+					],
+					"path": [
+						"users"
 					]
 				}
 			},
@@ -48,7 +77,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"bobTest999xxx\",\r\n    \"email\": \"jhoverta@microsoft.com\",\r\n    \"first_name\": \"Jarad\",\r\n    \"last_name\": \"Hovert\"\r\n}",
+					"raw": "{\r\n    \"username\": \"bobTest999xxxyyy\",\r\n    \"email\": \"jhovert@amicrosoft.com\",\r\n    \"first_name\": \"Jarad\",\r\n    \"last_name\": \"Hovert\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
