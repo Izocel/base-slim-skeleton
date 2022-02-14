@@ -21,6 +21,8 @@ return function (App $app) {
     $app->group('/user', function (RouteCollectorProxy $group) {
         $group->get('/{id:[0-9]+}', \App\Action\UserReadAction::class);
         $group->post('', \App\Action\UserCreateAction::class);
+        $group->put('/{id:[0-9]+}', \App\Action\UserUpdateAction::class);
+        $group->delete('/{id:[0-9]+}', \App\Action\UserDeleteAction::class);
     });
 
     /**
@@ -29,19 +31,6 @@ return function (App $app) {
     $app->group('/users', function (RouteCollectorProxy $group) {
         $group->get('', \App\Action\UserReadAction::class);
     });
-
-    /**
-     * GET	   	Lister seulement l'usager avec le id en paramètre
-     * PUT	   	Modifier l'usager avec le id en paramètre
-     * DELETE	Supprimer l'usager avec le id en paramètre
-     */
-     $app->group('/user', function (RouteCollectorProxy $group) {
-
-         // FIXME: Fonctionne seulement avec tout les champ user fournis
-         $group->put('', \App\Action\UserUpdateAction::class);
-         
-         $group->delete('', \App\Action\UserDeleteAction::class);
-     });
 
 
 };

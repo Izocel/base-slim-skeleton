@@ -1,5 +1,6 @@
 <?php
 
+use App\Middleware\LoggerMiddleware;
 use Selective\BasePath\BasePathMiddleware;
 use Slim\App;
 use Slim\Middleware\ErrorMiddleware;
@@ -11,6 +12,9 @@ return function (App $app) {
 
     $app->add(TwigMiddleware::class);
 
+    // Ajoute la configuration d'un chemin de base
+    $app->add(LoggerMiddleware::class);
+
     // Permettre les CORS
     $app->add(\App\Middleware\CorsMiddleware::class);
 
@@ -19,8 +23,6 @@ return function (App $app) {
 
     // Ajoute la configuration d'un chemin de base
     $app->add(BasePathMiddleware::class);
-
-
     
     // Permet de récupérer les érreurs et exceptions
     // !!!! DOIT TOUJOURS ÊTRE LE DERNIER MIDDLEWARE !!!! \\
