@@ -47,7 +47,8 @@ final class LoggerMiddleware implements MiddlewareInterface
 
         $name = $routingResults->getUri();
         $methods = $route->getMethods();
-        $body = $request->getParsedBody();
+        $body = $request->getBody()->getContents()?? "";
+        $body = str_replace('    ', "",$body);
 
         $loggerString = $methods[0]." ".$name;
         $loggerString .= $body ? " body: " . $body : ""; 
