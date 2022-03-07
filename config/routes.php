@@ -19,8 +19,8 @@ return function (App $app) {
      * POST	    Insertion d'un usager
      */
     $app->group('/user', function (RouteCollectorProxy $group) {
-        $group->get('/{id:[0-9]+}', \App\Action\UserReadAction::class);
         $group->post('', \App\Action\UserCreateAction::class);
+        $group->get('/{id:[0-9]+}', \App\Action\UserReadAction::class);
         $group->put('/{id:[0-9]+}', \App\Action\UserUpdateAction::class);
         $group->delete('/{id:[0-9]+}', \App\Action\UserDeleteAction::class);
     });
@@ -29,6 +29,13 @@ return function (App $app) {
      * GET	    Selection de plusieurs usagers
      */
     $app->group('/users', function (RouteCollectorProxy $group) {
+        $group->get('', \App\Action\UserReadAction::class);
+    });
+
+    /**
+     * GET	    Selection de plusieurs livre
+     */
+    $app->group('/books', function (RouteCollectorProxy $group) {
         $group->get('', \App\Action\UserReadAction::class);
     });
 
