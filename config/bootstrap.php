@@ -5,6 +5,8 @@ use Slim\App;
 
 // Injection des dépendences tierces
 require_once __DIR__ . '/../vendor/autoload.php';
+// Chargement des variables d'environnement
+require_once __DIR__ . '/env.php'; // Ligne à ajouter
 
 // Classe d'aide à la construction d'un conteneur d'application
 $containerBuilder = new ContainerBuilder();
